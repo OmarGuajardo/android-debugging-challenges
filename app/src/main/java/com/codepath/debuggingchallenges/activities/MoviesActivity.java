@@ -40,7 +40,7 @@ public class MoviesActivity extends AppCompatActivity {
         fetchMovies();
 
         // Create the adapter to convert the array to views
-        // They were re-initlizing the adapter variable
+        // They were re-initializing the adapter variable
         adapter = new MoviesAdapter(movies);
 
         // Attach the adapter to a ListView
