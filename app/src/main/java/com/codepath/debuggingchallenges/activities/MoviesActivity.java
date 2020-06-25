@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
@@ -33,17 +34,20 @@ public class MoviesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movies);
         rvMovies = findViewById(R.id.rvMovies);
 
-        movies = new ArrayList<Movie>();
+        movies = new ArrayList<>();
 
         //Fetch Data first
         fetchMovies();
 
         // Create the adapter to convert the array to views
-        MoviesAdapter adapter = new MoviesAdapter(movies);
+        // They were re-initlizing the adapter variable
+        adapter = new MoviesAdapter(movies);
 
         // Attach the adapter to a ListView
         rvMovies.setAdapter(adapter);
 
+        //The layout manager was missing
+        rvMovies.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
@@ -57,11 +61,9 @@ public class MoviesActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Headers headers, JSON response) {
                 try {
                     JSONArray moviesJson = response.jsonObject.getJSONArray("results");
-                    movies = Movie.fromJSONArray(moviesJson);
-                    Log.i("MovieActivity","movies we received " +movies.get(0).getTitle());
-                    Log.i("MovieActivity","movies we received " +movies.get(1).getTitle());
-                    Log.i("MovieActivity","movies we received " +movies.get(2).getTitle());
-                    Log.i("MovieActivity","movies we received " +movies.get(3).getTitle());
+//                    movies = Movie.fromJSONArray(moviesJson);
+                    movies.addAll(Movie.fromJSONArray(moviesJson));
+                    adapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
                     e.printStackTrace();

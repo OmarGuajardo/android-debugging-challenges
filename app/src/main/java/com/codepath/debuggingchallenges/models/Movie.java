@@ -37,8 +37,6 @@ public class Movie {
         ArrayList<Movie> results = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
-                Log.i("Movie","this is the movie that we are getting at every" +
-                        "i value " + jsonArray.getJSONObject(i));
                 results.add(new Movie(jsonArray.getJSONObject(i)));
             } catch (JSONException e) {
                 e.printStackTrace();
